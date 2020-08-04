@@ -5,21 +5,22 @@ import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { submitDeck } from "../utils/api"
 import { addDeck } from '../actions';
+import { white } from '../utils/colors';
 
 const AddNewDeck = ({ dispatch, navigation }) => {
-  const [deckName, setDeckName] = useState("")
+  const [deckName, setDeckName] = useState("");
 
   const handleAddDeck = () => {
-    navigation.navigate("Details")
     if (!deckName) return;
     
     const deck = {
-      [deckName]: {
+      [deckName.replace(/\s/g, "")]: {
         title: deckName,
         questions: []
       }
     };
     submitDeck(deck).then(() => dispatch(addDeck(deck)));
+    navigation.navigate("Details", { id: deckName.replace(/\s/g, "") })
     setDeckName("");
   }
 
@@ -31,15 +32,15 @@ const AddNewDeck = ({ dispatch, navigation }) => {
         onChangeText={text => setDeckName(text)}
         placeholder="Write your new deck's name"
         value={deckName} />
-        <View style={styles.btnContainer}>
-          <Button
-            onPress={handleAddDeck}
-            buttonStyle={{ backgroundColor: "black", height: 50 }}
-            title="Add deck"
-            type="solid"
-            raised
-          />
-        </View>
+      <View style={styles.btnContainer}>
+        <Button
+          onPress={handleAddDeck}
+          buttonStyle={{ backgroundColor: "black", height: 50 }}
+          title="Add deck"
+          type="solid"
+          raised
+        />
+      </View>
     </View>
   );
 }
@@ -49,8 +50,8 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: StatusBar.currentHeight - 20 || 0,
     padding: 20,
-    marginVertical: 8,
     alignItems: "center",
+    backgroundColor: white
   },
   header: {
     fontSize: 36,

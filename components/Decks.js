@@ -15,7 +15,8 @@ const Decks = ({ dispatch, decks }) => {
     <SafeAreaView>
       <FlatList
         data={decks}
-        renderItem={ item => <Deck deck={item.item} /> }
+        style={{ backgroundColor: "#FFF" }}
+        renderItem={item => <Deck deck={item.item} index={item.index} />}
         keyExtractor={item => item.title}
       />
     </SafeAreaView>

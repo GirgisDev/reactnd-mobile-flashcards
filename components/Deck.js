@@ -1,40 +1,58 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { white, gray } from '../utils/colors';
+import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const Deck = ({ deck }) => {
+const Deck = ({ deck, index }) => {
+  const navigation = useNavigation();
+  const goToDetails = () => {
+    navigation.navigate("Details", { id: deck.title.replace(/\s/g, "") })
+  }
   return (
-    <View style={styles.card}>
-      <Text style={styles.cardHeader}>{ deck.title }</Text>
-      <Text style={styles.cardText}>{ deck.questions.length } cards</Text>
-    </View>
+    <TouchableOpacity style={[styles.cardContainer, index === 0 && (styles.firstContainer)]} onPress={goToDetails}>
+      <View style={styles.card}>
+        <Text style={styles.cardHeader}>{deck.title}</Text>
+        <Text style={styles.cardText}>{deck.questions.length} cards</Text>
+      </View>
+    </TouchableOpacity>
   );
 }
- 
+
 export default Deck;
 
 const styles = StyleSheet.create({
-  card: {
+  firstContainer: {
+    marginTop: 10
+  },
+  cardContainer: {
     flex: 1,
-    width: "90%",
-    minHeight: 180,
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 20,
     alignItems: "center",
+  },
+  card: {
+    width: "90%",
+    minHeight: 120,
+    marginVertical: 8,
+    padding: 20,
     justifyContent: "center",
+    alignItems: "center",
     backgroundColor: white,
     borderRadius: 5,
-    shadowColor: "black",
+    shadowColor: "#000",
     shadowOffset: {
-      width: 2,
-      height: 2
+      width: 0,
+      height: 2,
     },
-    shadowOpacity: .2,
-    shadowRadius: 9
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    borderColor: gray,
+    borderWidth: 1,
+    borderStyle: "solid"
   },
   cardHeader: {
-    fontSize: 30
+    fontSize: 30,
+    textAlign: "center"
   },
   cardText: {
     fontSize: 18,

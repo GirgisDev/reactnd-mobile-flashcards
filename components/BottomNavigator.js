@@ -5,8 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { purple } from '../utils/colors';
 
 import Decks from './Decks';
-// import AddNewDeck from './AddNewDeck';
-import StackNavigator from './StackNavigator';
+import AddNewDeck from './AddNewDeck';
 
 const Tab = createBottomTabNavigator();
 
@@ -24,7 +23,7 @@ const BottomNavigator = () => {
         }} />
       <Tab.Screen 
         name="AddDeck" 
-        component={StackNavigator}
+        component={AddNewDeck}
         options={{
           tabBarLabel: 'AddDeck',
           tabBarIcon: ({ color, size }) => (
