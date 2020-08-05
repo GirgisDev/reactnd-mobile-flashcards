@@ -5,6 +5,7 @@ import { white, gray } from '../utils/colors';
 import { Button } from 'react-native-elements';
 import QuizQuestions from './QuizQeustions';
 import QuizScore from './QuizScore';
+import { clearLocalNotification, setLocalNotification } from '../utils/_decks';
 
 const Quiz = ({ decks, route, navigation }) => {
   const deckId = route.params ? route.params.id : null;
@@ -41,12 +42,17 @@ const Quiz = ({ decks, route, navigation }) => {
   
   const calcScore = () => {
     const calculatedScore = (score / deck.questions.length) * 100;
-    return parseFloat(calculatedScore).toPrecision(4)
+    return calculatedScore.toString().length >= 3 ? parseFloat(calculatedScore).toPrecision(3) : calculatedScore
   }
 
   const retakeQuiz = () => {
     setFinishedQuiz(false);
     setScore(0);
+  }
+
+  const HandleFinishedQuiz = () => {
+    setFinishedQuiz(true);
+    clearLocalNotification().then(setLocalNotification)
   }
 
   return (
@@ -59,7 +65,7 @@ const Quiz = ({ decks, route, navigation }) => {
         : <QuizQuestions 
             questions={deck.questions}
             answeredCorrectly={() => setScore(score + 1)}
-            finishedQuiz={() => setFinishedQuiz(true)} />
+            finishedQuiz={HandleFinishedQuiz} />
       }
     </View>
   );

@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-// import BottomNavigator from './components/BottomNavigator';
 import { white } from './utils/colors';
 
 import { createStore } from 'redux';
@@ -10,10 +9,14 @@ import reducer from "./reducers";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
 import StackNavigator from './components/StackNavigator';
+import { setLocalNotification } from './utils/_decks';
 
 const store = createStore(reducer);
 
 export default function App() {
+  useEffect(() => {
+    setLocalNotification()
+  }, [])
   return (
     <Provider store={store}>
       <NavigationContainer>

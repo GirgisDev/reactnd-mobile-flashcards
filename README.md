@@ -1,4 +1,7 @@
+## This App was tested for android environment only.
+
 This project was bootstrapped with [Create React Native App](https://github.com/expo/create-react-native-app).
+
 
 ## Available Scripts
 

@@ -1,7 +1,11 @@
 import AsyncStorage from "@react-native-community/async-storage";
-export const DECKS_STORAGE_KEY = "flashCards:decks";
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions"
 
-function setDummyData () {
+export const DECKS_STORAGE_KEY = "flashCards:decks";
+export const NOTIFICATION_KEY = "flashCards:notifications";
+
+function setDummyData() {
   const dummyDecks = {
     React: {
       title: 'React',
@@ -34,4 +38,42 @@ function setDummyData () {
 
 export const formatDecks = decks => {
   return decks ? JSON.parse(decks) : setDummyData()
+}
+
+export function clearLocalNotification() {
+  return AsyncStorage.removeItem(NOTIFICATION_KEY)
+    .then(Notifications.cancelAllScheduledNotificationsAsync)
+}
+
+export function setLocalNotification() {
+  AsyncStorage.getItem(NOTIFICATION_KEY)
+    .then(JSON.parse)
+    .then(data => {
+      if (!data) {
+        Notifications.requestPermissionsAsync().then(({ status }) => {
+          if (status === "granted") {
+            Notifications.cancelAllScheduledNotificationsAsync();
+
+            let tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(20)
+            tomorrow.setMinutes(0)
+
+            Notifications.scheduleNotificationAsync({
+              content: {
+                title: 'Refresh your memory!',
+                body: "👋 Don't forget to exercise today",
+              },
+              trigger: {
+                minute: 0,
+                hour: 20,
+                repeats: true
+              }
+            })
+
+            AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
+          }
+        })
+      }
+    })
 }
