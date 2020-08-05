@@ -35,6 +35,7 @@ const AddNewDeck = ({ dispatch, navigation }) => {
       <View style={styles.btnContainer}>
         <Button
           onPress={handleAddDeck}
+          disabled={!deckName}
           buttonStyle={{ backgroundColor: "black", height: 50 }}
           title="Add deck"
           type="solid"

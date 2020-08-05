@@ -5,6 +5,7 @@ import AddNewDeck from './AddNewDeck';
 import AddNewCard from './AddNewCard';
 import BottomNavigator from './BottomNavigator';
 import { purple, white } from '../utils/colors';
+import Quiz from './Quiz';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,24 @@ const StackNavigator = () => {
       <Stack.Screen
         name="AddCard"
         component={AddNewCard}
+        options={{
+          headerStyle: {
+            backgroundColor: purple,
+          },
+          headerTintColor: white,
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            alignSelf: "center",
+            position: "relative",
+            left: -30,
+          },
+          headerBackTitleStyle: {
+            fontSize: 16
+          }
+        }} />
+      <Stack.Screen
+        name="Quiz"
+        component={Quiz}
         options={{
           headerStyle: {
             backgroundColor: purple,

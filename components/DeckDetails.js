@@ -15,6 +15,9 @@ const DeckDetails = ({ decks, route, dispatch, navigation }) => {
   const handleAddCard = () => {
     navigation.navigate("AddCard", { id: deckId });
   }
+  const handleTakeQuiz = () => {
+    navigation.navigate("Quiz", { id: deckId });
+  }
   const handleDeleteDeck = () => {
     removeDeck({ decks, deckId }).then(() => dispatch(deleteDeck(deckId)))
     navigation.navigate("Decks");
@@ -51,7 +54,7 @@ const DeckDetails = ({ decks, route, dispatch, navigation }) => {
       </View>
       <View style={styles.deckDetailsBtn}>
         <Button
-          onPress={handleAddCard}
+          onPress={handleTakeQuiz}
           buttonStyle={{
             height: 50,
             backgroundColor: "#000"
